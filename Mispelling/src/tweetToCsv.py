@@ -54,7 +54,7 @@ def get_all_tweets(screen_name):
     
     #transform the tweepy tweets into a 2D array that will populate the csv    
     outtweets = [[ tweet.text.encode("utf-8")] for tweet in alltweets]
-    print outtweets
+    #print outtweets
     
     #write the csv    
     with open('csv\%s_tweets.csv' % screen_name, 'wb') as f:
@@ -77,12 +77,12 @@ def cleanCsv():
             
             #clean rows
             for row in reader:
-                print row[0]
+                #print row[0]
                 newstr = re.sub('([^a-zA-Z0-9_ # @ \%\'])', '', row[0])
                 newstr = re.sub('(https)[a-zA-Z0-9_  # @ \%\']*', '', newstr)
                 newstr = re.sub('(http)[a-zA-Z0-9_  # @ \%\']*', '', newstr)
                 clean.append(newstr)
-                print newstr
+                #print newstr
 
     #write the csv    
     with open('csv\clean_tweets.csv', 'wb') as f:
@@ -91,8 +91,6 @@ def cleanCsv():
     pass
 
 print "end tweetToCsv"
-
-
 
         
         

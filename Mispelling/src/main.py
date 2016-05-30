@@ -4,6 +4,7 @@ Created on 28 mag 2016
 @author: Work
 '''
 import tweetToCsv
+import ground_truth
 
 if __name__ == '__main__':
     
@@ -21,5 +22,5 @@ if __name__ == '__main__':
     tweetToCsv.get_all_tweets("WSJ")
     tweetToCsv.get_all_tweets("UN")
     """
-    
     tweetToCsv.cleanCsv()
+    ground_truth.ground_trut()
