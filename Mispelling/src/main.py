@@ -23,4 +23,4 @@ if __name__ == '__main__':
     tweetToCsv.get_all_tweets("UN")
     """
     tweetToCsv.cleanCsv()
-    ground_truth.ground_trut()
+    ground_truth.ground_truth()
