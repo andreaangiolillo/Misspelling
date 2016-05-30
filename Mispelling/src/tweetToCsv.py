@@ -4,7 +4,7 @@
 import tweepy
 import csv
 import re
-from _sqlite3 import Row
+
 
 #Twitter API credentials
 
@@ -70,25 +70,29 @@ def cleanCsv():
     #list with name of csv   
     name = ["BBCBreaking","WSJPolitics","NBA","nytimes","Pontifex","POTUS","SkyFootball","UN","WSJ","WWF"]  
     clean = []
-    
+  
     for i in range(0,length): #length): #for all csv
         with open('csv\%s_tweets.csv' % name[i], 'rb') as f:    
             reader = csv.reader(f)
             
             #clean rows
             for row in reader:
-                #print row[0]
-                newstr = re.sub('[^a-zA-Z0-9_ # @ \. \%\']', '', row[0])
+                print row[0]
+                newstr = re.sub('([^a-zA-Z0-9_ # @ \%\'])', '', row[0])
+                newstr = re.sub('(https)[a-zA-Z0-9_  # @ \%\']*', '', newstr)
+                newstr = re.sub('(http)[a-zA-Z0-9_  # @ \%\']*', '', newstr)
                 clean.append(newstr)
-                #print newstr
+                print newstr
 
     #write the csv    
     with open('csv\clean_tweets.csv', 'wb') as f:
-        writer = csv.writer(f)
-        writer.writerows(clean)
+        writer = csv.writer(f, delimiter='\n')
+        writer.writerows([clean])
     pass
 
-    
- 
+print "end tweetToCsv"
+
+
+
         
         

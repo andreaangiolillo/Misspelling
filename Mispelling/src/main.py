@@ -9,8 +9,8 @@ if __name__ == '__main__':
     
     #download tweet and put all in csv
     
-   
-    """tweetToCsv.get_all_tweets("BBCBreaking")
+    """
+    tweetToCsv.get_all_tweets("BBCBreaking")
     tweetToCsv.get_all_tweets("POTUS")
     tweetToCsv.get_all_tweets("nytimes")
     tweetToCsv.get_all_tweets("WSJPolitics")
