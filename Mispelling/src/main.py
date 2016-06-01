@@ -6,6 +6,10 @@ Created on 28 mag 2016
 
 import tweetToCsv
 import ground_truth
+import GUI
+import sys
+from PyQt4 import *
+import sys
 
 global TEST
 
@@ -15,7 +19,17 @@ global TEST
 if __name__ == '__main__':
     
     TEST = "T"
-    
+   
+    app = GUI.QtGui.QApplication(sys.argv)
+    Mispelling = GUI.QtGui.QMainWindow()
+    GUI.ui = GUI.Ui_Mispelling()
+    GUI.ui.setupUi(Mispelling)
+    Mispelling.show()
+    sys.exit(app.exec_())
+   
+
+   
+   
     #download tweet and put all in csv
     
     """

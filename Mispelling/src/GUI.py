@@ -3,7 +3,7 @@
 
 
 from PyQt4 import QtCore, QtGui
-
+from PyQt4 import *
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
@@ -93,12 +93,4 @@ class Ui_Mispelling(object):
         self.pushButton_2.setText(_translate("Mispelling", "PushButton", None))
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtGui.QApplication(sys.argv)
-    Mispelling = QtGui.QMainWindow()
-    ui = Ui_Mispelling()
-    ui.setupUi(Mispelling)
-    Mispelling.show()
-    sys.exit(app.exec_())
 
