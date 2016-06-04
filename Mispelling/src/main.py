@@ -6,10 +6,13 @@ Created on 28 mag 2016
 
 import tweetToCsv
 import ground_truth
+import observations_p
 import GUI
 import sys
 from PyQt4 import *
 import sys
+import observations_p
+import perturbation
 
 global TEST
 
@@ -19,14 +22,14 @@ global TEST
 if __name__ == '__main__':
     
     TEST = "T"
-   
+    """
     app = GUI.QtGui.QApplication(sys.argv)
     Mispelling = GUI.QtGui.QMainWindow()
     GUI.ui = GUI.Ui_Mispelling()
     GUI.ui.setupUi(Mispelling)
     Mispelling.show()
     sys.exit(app.exec_())
-   
+    """
 
    
    
@@ -44,6 +47,13 @@ if __name__ == '__main__':
     tweetToCsv.get_all_tweets("WSJ")
     tweetToCsv.get_all_tweets("UN")
     """
-    #tweetToCsv.cleanCsv()
+    tweetToCsv.cleanCsv()
+    #to_perturbation = open('csv\clean_tweets.csv')
+    perturbation.perturbate_tweets()
     #tweetToCsv.perturbation()
     ground_truth.ground_truth()
+    
+    clean_tweets = open('csv\clean_tweets.csv')
+    perturbed_tweets = open('csv\perturbation_tweets.csv')
+    
+    observations_p.observations_p(clean_tweets, perturbed_tweets)

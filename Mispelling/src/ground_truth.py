@@ -7,7 +7,10 @@ Created on 30 mag 2016
 
 global TEST
 
-TEST = "T"
+TEST = ""
+
+def isletter(carattere):
+    return ord(carattere) > 96 and ord(carattere) < 123
 
 def ground_truth():
     pigreco = [0.0000]*26
@@ -46,8 +49,7 @@ def ground_truth():
     #file per il ground truth
     inputfile = open('csv\clean_tweets.csv')
 
-    def isletter(carattere):
-        return ord(carattere) > 96 and ord(carattere) < 123
+
 
     def iswordcorrect(parola):
         for i in range(len(parola) - 1) :
@@ -56,21 +58,17 @@ def ground_truth():
                     return False
         return True
 
-    def lettercounter(ascii_letter_number) :
-        return 1          
+    #def lettercounter(ascii_letter_number) :
+    #    return 1          
 
     for line in inputfile : #leggo tutte le parole 
-        line = line.lower() #tutte minuscole
+        line = line.lower() #tutte minuscole #DOVREBBE ESSERE INUTILE PERCHE' E' STATO GIA FATTO NEL PARSE TWEETS, TOGLI
         for word in line.split() : #divido lo stream di char in string appena trovo uno spazio
             if iswordcorrect(word): #if word.isalpha() : #se la word contiene solo char alfabetici(escludo i # ma anche la punteggiatura)
                 if isletter(word[0]) : #se il primo char non e' lettera skippo(hashtag o tag o che)
                     pigreco[ord(word[0]) - 97] += 1
                     word_counter += 1
                 #ora controllo le P di passare da una lettera all'altra
-                """if len(word) == 1 :
-                    print("lunghezza uno, non fare niente")
-                    break
-                    #VEDI POI CHE FARE """
                 if not len(word) == 1 : #se la parola ha length almeno uguale a 2
                     for i in range(len(word)-1): #primo iteratore
                         i += 1 #perdoname madre por mi code loco
@@ -104,6 +102,7 @@ def ground_truth():
         print "\n" 
         
         #stampa matrice di transizioni
+        
         print "matrice transizione:"
         for line in transition_p:
             print line
@@ -113,8 +112,7 @@ def ground_truth():
     
 
 
-
-                   
+"""               
     pigreco = [0.0000]*26
     observations_p = [[0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000],
                     [0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000],
@@ -159,10 +157,6 @@ def ground_truth():
                     pigreco[ord(word[0]) - 97] += 1
                     word_counter += 1
                 #ora controllo le P di passare da una lettera all'altra
-                """if len(word) == 1 :
-                    print("lunghezza uno, non fare niente")
-                    break
-                    #VEDI POI CHE FARE """
                 if not len(word) == 1 : #se la parola ha length almeno uguale a 2
                     for i in range(len(word)-1): #primo iteratore
                         i += 1 #perdoname madre por mi code loco
@@ -202,6 +196,4 @@ def ground_truth():
 
 
     print "fine calcolo matrice di observations_p"
-    
-  
-    
+"""  
