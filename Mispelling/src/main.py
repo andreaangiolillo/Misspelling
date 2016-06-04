@@ -13,6 +13,7 @@ from PyQt4 import *
 import sys
 import observations_p
 import perturbation
+import hmm 
 
 global TEST
 
@@ -47,13 +48,14 @@ if __name__ == '__main__':
     tweetToCsv.get_all_tweets("WSJ")
     tweetToCsv.get_all_tweets("UN")
     """
-    tweetToCsv.cleanCsv()
+   #tweetToCsv.cleanCsv()
     #to_perturbation = open('csv\clean_tweets.csv')
-    perturbation.perturbate_tweets()
+   #perturbation.perturbate_tweets()
     #tweetToCsv.perturbation()
-    ground_truth.ground_truth()
+   #ground_truth.ground_truth()
     
-    clean_tweets = open('csv\clean_tweets.csv')
-    perturbed_tweets = open('csv\perturbation_tweets.csv')
+   #clean_tweets = open('csv\clean_tweets.csv')
+   #perturbed_tweets = open('csv\perturbation_tweets.csv')
     
-    observations_p.observations_p(clean_tweets, perturbed_tweets)
+    #observations_p.observations_p(clean_tweets, perturbed_tweets)
+    hmm.create_hmm()
