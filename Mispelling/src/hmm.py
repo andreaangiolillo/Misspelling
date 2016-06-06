@@ -3,43 +3,105 @@ Created on 04 giu 2016
 
 @author: Work
 '''
+from yahmm import *
+import numpy as np
 
-import ground_truth
-import observations_p
-import tweetToCsv
+from matplotlib.pyplot import *
+from IPython.display import *
+
+
 import numpy
 from pomegranate import *
 from numpy import double
-import string
+from ground_truth import iswordcorrect
 
 
-nameL = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-
-
-pigreco = DiscreteDistribution( { 'a': ground_truth.pigreco[0], 'b': ground_truth.pigreco[1], 'c': ground_truth.pigreco[2], 'd': ground_truth.pigreco[3], 'e': ground_truth.pigreco[4], 'f': ground_truth.pigreco[5], 'g': ground_truth.pigreco[6], 'h': ground_truth.pigreco[7],
-                                 'i': ground_truth.pigreco[8], 'j': ground_truth.pigreco[9], 'k': ground_truth.pigreco[10], 'l': ground_truth.pigreco[11],'m': ground_truth.pigreco[12], 'n': ground_truth.pigreco[13], 'o': ground_truth.pigreco[14], 'p': ground_truth.pigreco[15],
-                                 'q': ground_truth.pigreco[16], 'r': ground_truth.pigreco[17], 's': ground_truth.pigreco[18], 't': ground_truth.pigreco[19],'u': ground_truth.pigreco[20], 'v':ground_truth.pigreco[21], 'w': ground_truth.pigreco[22], 'x': ground_truth.pigreco[23], 'y': ground_truth.pigreco[24], 'z': ground_truth.pigreco[25]} )
-
-
-model = HiddenMarkovModel("Mispelling")
-def create_hmm():
+class Hmm:
+    transition_p = []
+    observations_p = []
+    pigreco = []
     
-    for i in range(0,25):#insert states
-        globals()[nameL[i].strip()]= State(pigreco, name=nameL[i].strip())
-        model.add_states(globals()[nameL[i].strip()])
-        error = len(tweetToCsv.error_list[i])
-        for n in range(0, error - 1):#insert observations
-            globals()['observation_%s_%i' %(nameL[i].strip(), n )] = State(None, name=tweetToCsv.error_list[i][n].upper()+"%i"%(i))
-            model.add_states(globals()['observation_%s_%i' %(nameL[i].strip(), n)])
+    nameL = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    
+    def __init__(self, tra, obs,p):
+        self.transition_p = tra
+        self.observations_p = obs
+        self.pigreco = p
+
+
+    
+
+
+    def create_hmm(self, error_list):
+        print "matrice transizione:"
+        model = HiddenMarkovModel("Mispelling")
+        """pigreco1 = DiscreteDistribution( { 'a': self.pigreco[0], 'b': self.pigreco[1], 'c': self.pigreco[2], 'd': self.pigreco[3], 'e': self.pigreco[4], 'f': self.pigreco[5], 'g': self.pigreco[6], 'h': self.pigreco[7],
+                                 'i': self.pigreco[8], 'j': self.pigreco[9], 'k': self.pigreco[10], 'l': self.pigreco[11],'m': self.pigreco[12], 'n': self.pigreco[13], 'o': self.pigreco[14], 'p': self.pigreco[15],
+                                 'q': self.pigreco[16], 'r': self.pigreco[17], 's': self.pigreco[18], 't': self.pigreco[19],'u': self.pigreco[20], 'v':self.pigreco[21], 'w': self.pigreco[22], 'x': self.pigreco[23], 'y': self.pigreco[24], 'z': self.pigreco[25]} )
+        """
+        for line in self.transition_p:
+            print line
             
-    for i in range(0,25):#insert transactions
-        for n in range(0,25):
-            model.add_transition(globals()[nameL[i].strip()], globals()[nameL[n].strip()], ground_truth.transition_p[i][n])
-            #print p_transaction1[i][n]
-    for i in range(0,25):#insert observations
-        error = len(tweetToCsv.error_list[i])
-        for n in range(0, error - 1):
-            model.add_transition(globals()[nameL[i].strip()], globals()['observation_%s_%i' %(nameL[i].strip(),n)], observations_p.obs_matrix[i][n])
+        for i in range(0,26):
+            
+            globals()[self.nameL[i].strip()] = State(DiscreteDistribution( { 'a': self.observations_p[i][0], 'b': self.observations_p[i][1], 'c': self.observations_p[i][2], 'd': self.observations_p[i][3], 'e': self.observations_p[i][4], 'f': self.observations_p[i][5], 'g': self.observations_p[i][6], 'h': self.observations_p[i][7],
+                                 'i': self.observations_p[i][8], 'j': self.observations_p[i][9], 'k': self.observations_p[i][10], 'l': self.observations_p[i][11],'m': self.observations_p[i][12], 'n': self.observations_p[i][13], 'o': self.observations_p[i][14], 'p': self.observations_p[i][15],
+                                 'q': self.observations_p[i][16], 'r': self.observations_p[i][17], 's': self.observations_p[i][18], 't': self.observations_p[i][19],
+                                 'u': self.observations_p[i][20], 'v':self.observations_p[i][21], 'w': self.observations_p[i][22], 'x': self.observations_p[i][23], 
+                                 'y': self.observations_p[i][24], 'z': self.observations_p[i][25]}), name = self.nameL[i].strip())
+
+            model.add_state(globals()[self.nameL[i].strip()])
+            print self.nameL[i].strip()
+            
+        for i in range(0,26):
+                model.add_transition(model.start, globals()[self.nameL[i].strip()], self.pigreco[i])
+            
+        for i in range(0,26):#insert transactions
+            for n in range(0,26):
+                model.add_transition(globals()[self.nameL[i].strip()], globals()[self.nameL[n].strip()], self.transition_p[i][n])
+                #print self.nameL[i]
    
-    model.bake()
-    print model 
+        model.bake(True,None)
+        
+     
+            
+        csv_prova = open("csv\errorata.csv")
+        
+        for line in csv_prova:
+            for word in line.split():
+                if iswordcorrect(word):
+                    logp, path = model.viterbi(word)
+                    print "sequence: '{}' - log probability: {} - path: {}".format(''.join(word), logp, " ".join(state.name for idx, state in path))
+
+
+        
+        
+        
+        """for i in range(0,26):#insert states
+            globals()[self.nameL[i].strip()]= State(pigreco1, name=self.nameL[i].strip())
+            model.add_states(globals()[self.nameL[i].strip()])
+            #print self.nameL[i]
+            #print i
+            for n in range(0, 26):#insert observations
+                if self.observations_p[i][n] > 0:
+                    globals()['observation_%s_%i' %(self.nameL[i].strip(), n )] = State(pigreco1, name='observation_%s_%i' %(self.nameL[i].strip(), n))
+                    model.add_states(globals()['observation_%s_%i' %(self.nameL[i].strip(), n)])
+            
+        for i in range(0,26):#insert transactions
+            for n in range(0,26):
+                model.add_transition(globals()[self.nameL[i].strip()], globals()[self.nameL[n].strip()], self.transition_p[i][n])
+                #print self.nameL[i]
+            for i in range(0,25):#insert observations
+                error = len(error_list[i])
+                for n in range(0, 26):
+                    if self.observations_p[i][n] > 0:
+                        model.add_transition(globals()[self.nameL[i].strip()], globals()['observation_%s_%i' %(self.nameL[i].strip(),n)], self.observations_p[i][n])
+   
+        model.bake(verbose=True)
+        model.draw()
+        print model
+   """ 
+
+
+
+    
