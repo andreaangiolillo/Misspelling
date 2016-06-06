@@ -27,18 +27,20 @@ def file_to_string(file_input):
                 file_string += word[i]
     return file_string
 
-def calculate_capabilities(perturbated_file, post_correction_file): #POTREI PASSARE SUBITO STRINGHE???
+def calculate_capabilities(original_file, post_correction_file): #POTREI PASSARE SUBITO STRINGHE???
     
     print "calcolo delle capacita' di predizione del modello:"
     
-    pert_string = file_to_string(perturbated_file)
+    original_string = file_to_string(original_file)
     post_string = file_to_string(post_correction_file)
     
-    if len(pert_string) == len(post_string):
-        for i in range(len(pert_string)):
-            if not pert_string[i] == post_string[i]:
-                mismatch_counter +=1 
+    mismatch_counter = 0    
+    
+    if len(original_string) == len(post_string):
+        for i in range(len(original_string)):
+            if not (original_string[i] == post_string[i]):
+                mismatch_counter += 1 
     else:
         print "ERROR: le lunghezze dei due file non coincidono"     
-    
-    return len(pert_string)/mismatch_counter
+
+    print float(mismatch_counter)/len(original_string)

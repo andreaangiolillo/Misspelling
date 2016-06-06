@@ -12,6 +12,8 @@ import GUI
 import sys
 from PyQt4 import *
 import sys
+import prediction_capabilities
+import csv
 
 
 
@@ -49,17 +51,35 @@ if __name__ == '__main__':
     csv.get_all_tweets("WWF")
     csv.get_all_tweets("WSJ")
     csv.get_all_tweets("UN")"""
+    
+    """
+    csv.get_all_tweets("UKLabour")
+    csv.get_all_tweets("Conservatives")
+    csv.get_all_tweets("David_Cameron")
+    csv.get_all_tweets("MayorofLondon")
+    csv.get_all_tweets("UniofOxford")
+    csv.get_all_tweets("Cambridge_Uni")
+    csv.get_all_tweets("tcddublin")
+    """
    
     csv.cleanCsv()
     csv.perturbate_tweets()
-    
+   
     esteem.transiction()
     clean_tweets = open('csv\clean_tweets.csv')
     perturbed_tweets = open('csv\perturbation_tweets.csv')
     esteem.observations_p(clean_tweets, perturbed_tweets)
     
+    print "DIFFERENZA TRA ORIGINALI"
+    clean_tweets = open('csv\clean_tweets.csv')
+    perturbed_tweets = open('csv\perturbation_tweets.csv')
+    prediction_capabilities.calculate_capabilities(clean_tweets, perturbed_tweets)
+    
+    
     hmm = Hmm(esteem.transition_p, esteem.obs_matrix, esteem.pigreco )
     hmm.create_hmm(csv.error_list)
-    
 
-  
+    csv.print_tweets()    
+   
+    ##############################################################################################
+

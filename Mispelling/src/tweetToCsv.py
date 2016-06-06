@@ -109,12 +109,14 @@ class TweetToCsv:
     def cleanCsv(self):
         print "Start cleanCsv"
     #set a csv number
-        length = 9 
+        
     
     #list with name of csv   
-        name = ["BBCBreaking","WSJPolitics","NBA","nytimes","Pontifex","POTUS","SkyFootball","UN","WSJ","WWF"]  
+        #name = ["BBCBreaking","WSJPolitics","NBA","nytimes","Pontifex","POTUS","SkyFootball","UN","WSJ","WWF"]  
+        name = ["UKLabour", "Conservatives", "David_Cameron", "MayorofLondon", "UniofOxford","Cambridge_Uni", "tcddublin"]
+        length = len(name)
         clean = []
-  
+
         for i in range(0,length): #length): #for all csv
             with open('csv\%s_tweets.csv' % name[i], 'rb') as f:    
                 reader = csv.reader(f)
@@ -122,13 +124,17 @@ class TweetToCsv:
             #clean rows
                 for row in reader:
                 #print row[0]
-                    row[0].strip()
-                    newstr = re.sub('([^a-zA-Z0-9_ # @ \'])', '', row[0])
-                    newstr = re.sub('(https)[a-zA-Z0-9_  # @ \%\']*', '', newstr)
+                    newstr = row[0].strip().lower()
+                    newstr = re.sub('([^a-zA-Z0-9_ # @ \- \'])', ' ', newstr)
+                    newstr = re.sub('([^a-z # @ \- \'])', '', newstr)
+                    newstr = re.sub('-', ' ', newstr)
+                    newstr = re.sub('\'', ' ', newstr)
+                    newstr = re.sub('\"', ' ', newstr)
+                    newstr = re.sub('(https)[a-z  # @ \%\']*', '', newstr)
                     newstr = re.sub('(http)[a-zA-Z0-9_  # @ \%\']*', '', newstr)
-                    newstr = re.sub('(#)[a-zA-Z0-9_  # @ \%\']*', '', newstr)
-                    newstr = re.sub('(@)[a-zA-Z0-9_  # @ \%\']*', '', newstr)
-                    newstr = re.sub('(rt)[a-zA-Z0-9_  # @ \%\']*', '', newstr.lower())
+                    newstr = re.sub('(@[a-z]*)', '', newstr)
+                    newstr = re.sub('(#[a-z]*)', '', newstr)
+                    newstr = re.sub('(^rt\s[a-z \s]+)', '', newstr)
                     newstr = newstr.strip()
                     if len(newstr) > 0:
                         clean.append(newstr.lower())
@@ -163,3 +169,20 @@ class TweetToCsv:
             writer = csv.writer(w, delimiter='\n')
             writer.writerows([riscrittura])                       
         print "End perturbation"
+    
+    """def print_tweets(self):
+        output_viterbi = open('csv\output_tweets.csv')
+        concatenator = []
+        for line in output_viterbi:
+            for word in line.split():
+                if word == "Mispelling-start":
+                    concatenator.append(' ')
+                else:
+                    concatenator.append(line)
+        #concatenator = ''.join(concatenator)
+
+
+        with open('csv\oooooooo.csv', 'wb') as f:
+            writer = csv.writer(f, delimiter='\n')
+            writer.writerows([concatenator])
+        pass"""

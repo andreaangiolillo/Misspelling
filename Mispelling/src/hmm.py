@@ -3,11 +3,12 @@ Created on 04 giu 2016
 
 @author: Work
 '''
-from yahmm import *
+
 import numpy as np
+import csv
 
 from matplotlib.pyplot import *
-from IPython.display import *
+
 
 
 import numpy
@@ -59,21 +60,26 @@ class Hmm:
         for i in range(0,26):#insert transactions
             for n in range(0,26):
                 model.add_transition(globals()[self.nameL[i].strip()], globals()[self.nameL[n].strip()], self.transition_p[i][n])
-                #print self.nameL[i]
    
         model.bake(True,None)
         
-     
-            
-        csv_prova = open("csv\errorata.csv")
-        
+        csv_prova = open("csv\perturbation_tweets.csv")
+        inferred_text = []
         for line in csv_prova:
             for word in line.split():
-                if iswordcorrect(word):
+                if iswordcorrect(word) and not(word == "nan") and not(word == "inf"):
+                    #print word
                     logp, path = model.viterbi(word)
-                    print "sequence: '{}' - log probability: {} - path: {}".format(''.join(word), logp, " ".join(state.name for idx, state in path))
-
-
+                    #print "sequence: '{}' - log probability: {} - path: {}".format(''.join(word), logp, " ".join(state.name for idx, state in path))
+                    for idx, state in path:
+                        #print state.name
+                        inferred_text.append(state.name)
+            inferred_text.append('\n')
+        
+        ''.join(inferred_text)
+        with open('csv\output_tweets.csv', 'wb') as w:
+            writer = csv.writer(w, delimiter= '\n')
+            writer.writerows([inferred_text])   
         
         
         

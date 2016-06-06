@@ -7,16 +7,15 @@ import numpy
 
 global TEST
 
-TEST = "T"
+TEST = "F"
 
 def isletter(carattere):
     return ord(carattere) > 96 and ord(carattere) < 123
 
 def iswordcorrect(parola):
-    for i in range(len(parola) - 1) :
+    for i in range(len(parola)) :
         if not isletter(parola[i]) :
-            if not isletter(parola[i+1]) :
-                return False
+            return False
     return True
 
 def file_to_string(file_input): 
@@ -30,36 +29,31 @@ def file_to_string(file_input):
 
 class Ground_Truth:
     
-    pigreco = [0.0000]*26
+    pigreco = numpy.zeros(26)
     transition_p = numpy.zeros((26,26))
     obs_matrix = numpy.zeros(shape = (26, 26)) #dimensione esagerata, alla fine vedi se riesci a ridurla (matrice sparsa/arraylist?)
     
     def transiction(self):
         print "Start transiction"
-        if (TEST == "T"):
-            lettere = ["a   ", "b   ", "c   ", "d   ", "e   ", "f   ", "g   ", "h   ", "i   ", "j   ", "k   ", "l   ", "m   ", "n   ", "o   ", "p   ", "q   ", "r   ", "s   ", "t   ", "u   ", "v   ", "w   ", "x   ", "y   ", "z   "]
-
-            word_counter = 0
-
-            #file per il ground truth
-            inputfile = open('csv\clean_tweets.csv')
-
-
-
-  
-
-            #def lettercounter(ascii_letter_number) :
-            #return 1          
-
+        
+        inputfile = open('csv\clean_tweets.csv')          
+        word_counter = 0
         for line in inputfile : #leggo tutte le parole 
-            line = line.lower() #tutte minuscole #DOVREBBE ESSERE INUTILE PERCHE' E' STATO GIA FATTO NEL PARSE TWEETS, TOGLI
             for word in line.split() : #divido lo stream di char in string appena trovo uno spazio
-                if iswordcorrect(word): #if word.isalpha() : #se la word contiene solo char alfabetici(escludo i # ma anche la punteggiatura)
-                    if isletter(word[0]) : #se il primo char non e' lettera skippo(hashtag o tag o che)
+                if iswordcorrect(word): #se la word contiene solo char alfabetici(escludo i # ma anche la punteggiatura)
+                    if isletter(word[0]) : #DOVREBBE ESSERE INUTILE
                         self.pigreco[ord(word[0]) - 97] += 1
                         word_counter += 1
                 #ora controllo le P di passare da una lettera all'altra
                     if not len(word) == 1 : #se la parola ha length almeno uguale a 2
+                        for j in range(len(word)-1): #primo iteratore //faccio -1 perche incremento subito i
+                            i = j + 1
+                            if isletter(word[i]): #se e' falso qua itera unaltra volta
+                                if isletter(word[j]): #se sono tutti e due lettere
+                                    self.transition_p[ord(word[j]) - 97][ord(word[i])- 97] += 1
+                                
+        
+        """         if not len(word) == 1 : #se la parola ha length almeno uguale a 2
                         for i in range(len(word)-1): #primo iteratore
                             i += 1 #perdoname madre por mi code loco
                             j = i-1 #j sta dietro a i
@@ -68,13 +62,15 @@ class Ground_Truth:
                                     self.transition_p[ord(word[i]) - 97][ord(word[j])- 97] += 1
                                 else: #se la j non e' lettera vado indietro al massimo di uno ancora
                                     if j-1>0 and isletter(word[j-1]):
-                                        self.transition_p[ord(word[i]) - 97][ord(word[j-1])- 97] += 1
-  
+                                        self.transition_p[ord(word[i]) - 97][ord(word[j-1])- 97] += 1 """
+                                        
+                                        
+                                        
         inputfile.close()
 
         if not word_counter == 0:
             for i in range(len(self.pigreco)):
-                self.pigreco[i] = round(self.pigreco[i]/word_counter, 4) #divido ogni i dell'array per il # di parole cosi' ho la distr. di P
+                self.pigreco[i] = self.pigreco[i]/word_counter #divido ogni i dell'array per il # di parole cosi' ho la distr. di P
 
         for i in range(len(self.transition_p)):
             counter = 0
@@ -103,33 +99,17 @@ class Ground_Truth:
     def observations_p(self,cleaned_tweets, perturbated_tweets):
         print "Start observations_p"
 
-
-        #PROVA POI SE RIESCI A FARLO CON  UNA STINGA UNICA
         clean_string = file_to_string(cleaned_tweets)
         pert_string = file_to_string(perturbated_tweets)
-        #l_clean = count_legth(cleaned_tweets)
-        #l_pert = count_legth(perturbated_tweets)
-        #print "file in stringa"
-        #print string_clean
-        #print string_pert
      
         if len(clean_string) == len(pert_string): #potremmo togliere questo controllo se ci fidiamo, risparimiamo 2n di computazione
             for i in range(len(clean_string)): #per ogni char controllo se sono uguali tra i due file
                 if isletter(clean_string[i]): #controllo se sono lettere (se dal parse tolgo i numeri posso toglierlo)
-                    self.obs_matrix[ord(clean_string[i])-97][ord(pert_string[i])-97] += 1 #altrimenti non fare nulla
-            """
-            if clean_string[i] == pert_string[i]: #se coincidono incremento sulla diagonale
-                if ground_truth.is_letter(clean_string): #controllo se sono lettere (se dal parse tolgo i numeri posso toglierlo)
-                    obs_matrix[ord(clean_string)-97][ord(pert_string)-97] += 1 #altrimenti non fare nulla
-            else: #se non coincidono incrementa la colonna corrispondente
-                obs_matrix[ord(clean)] """  
+                    self.obs_matrix[ord(clean_string[i])-97][ord(pert_string[i])-97] += 1 #altrimenti non fare nulla  
         else:
             print "ERROR: le lunghezze dei due file non coincidono"
     
-    
         print "finito di calcolare matrice di osservazioni: "
-        for line in self.obs_matrix:
-            print line
 
         for i in range(len(self.obs_matrix)):
             counter = 0.0
@@ -137,15 +117,10 @@ class Ground_Truth:
                 counter += self.obs_matrix[i][j]
             if not counter == 0:
                 for j in range(len(self.obs_matrix[i])):
-                    self.obs_matrix[i][j] = float(self.obs_matrix[i][j])/counter #round(transition_p[i][j]/(counter), 4)
+                    self.obs_matrix[i][j] = float(self.obs_matrix[i][j])/counter 
                 
         print "matrice di probabilita' di osservazioni: "
         for line in self.obs_matrix:
             print line
 
         print "End observations_p"  
-
-
-
-
-        
