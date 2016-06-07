@@ -79,7 +79,7 @@ if __name__ == '__main__':
     hmm = Hmm(esteem.transition_p, esteem.obs_matrix, esteem.pigreco )
     hmm.create_hmm(csv.error_list)
 
-    csv.print_tweets()    
+    #csv.print_tweets()    
    
     ##############################################################################################
 

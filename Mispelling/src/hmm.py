@@ -6,11 +6,11 @@ Created on 04 giu 2016
 
 import numpy as np
 import csv
-
+import re 
 from matplotlib.pyplot import *
 
 
-
+import string
 import numpy
 from pomegranate import *
 from numpy import double
@@ -65,6 +65,7 @@ class Hmm:
         
         csv_prova = open("csv\perturbation_tweets.csv")
         inferred_text = []
+        prova = []
         for line in csv_prova:
             for word in line.split():
                 if iswordcorrect(word) and not(word == "nan") and not(word == "inf"):
@@ -73,15 +74,22 @@ class Hmm:
                     #print "sequence: '{}' - log probability: {} - path: {}".format(''.join(word), logp, " ".join(state.name for idx, state in path))
                     for idx, state in path:
                         #print state.name
-                        inferred_text.append(state.name)
-            inferred_text.append('\n')
-        
+                        if (state.name != "Mispelling-start"): 
+                            inferred_text.append(state.name)
+                             
+                    inferred_text.append(" ")   
+            prova.append(string.join(inferred_text)) 
+            #print string.join(inferred_text)
+            inferred_text = []
         ''.join(inferred_text)
+        
         with open('csv\output_tweets.csv', 'wb') as w:
             writer = csv.writer(w, delimiter= '\n')
-            writer.writerows([inferred_text])   
+            writer.writerows([prova])   
         
         
+             
+       
         
         """for i in range(0,26):#insert states
             globals()[self.nameL[i].strip()]= State(pigreco1, name=self.nameL[i].strip())
