@@ -75,13 +75,13 @@ class Hmm:
                     for idx, state in path:
                         #print state.name
                         if (state.name != "Mispelling-start"): 
-                            inferred_text.append(state.name)
-                             
+                            inferred_text.append(state.name.strip())
+                            #print "LUI"+state.name.strip()+"LUI"
                     inferred_text.append(" ")   
-            prova.append(string.join(inferred_text)) 
+            prova.append(''.join(inferred_text)) 
             #print string.join(inferred_text)
             inferred_text = []
-        ''.join(inferred_text)
+        #''.join(inferred_text)
         
         with open('csv\output_tweets.csv', 'wb') as w:
             writer = csv.writer(w, delimiter= '\n')
