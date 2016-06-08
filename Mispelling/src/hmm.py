@@ -21,13 +21,15 @@ class Hmm:
     transition_p = []
     observations_p = []
     pigreco = []
+    final_p = []
     
     nameL = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
     
-    def __init__(self, tra, obs,p):
+    def __init__(self, tra, obs,p, f):
         self.transition_p = tra
         self.observations_p = obs
         self.pigreco = p
+        self.final_p = f
 
 
     
@@ -40,8 +42,8 @@ class Hmm:
                                  'i': self.pigreco[8], 'j': self.pigreco[9], 'k': self.pigreco[10], 'l': self.pigreco[11],'m': self.pigreco[12], 'n': self.pigreco[13], 'o': self.pigreco[14], 'p': self.pigreco[15],
                                  'q': self.pigreco[16], 'r': self.pigreco[17], 's': self.pigreco[18], 't': self.pigreco[19],'u': self.pigreco[20], 'v':self.pigreco[21], 'w': self.pigreco[22], 'x': self.pigreco[23], 'y': self.pigreco[24], 'z': self.pigreco[25]} )
         """
-        for line in self.transition_p:
-            print line
+        #for line in self.transition_p:
+        #    print line
             
         for i in range(0,26):
             
@@ -52,10 +54,15 @@ class Hmm:
                                  'y': self.observations_p[i][24], 'z': self.observations_p[i][25]}), name = self.nameL[i].strip())
 
             model.add_state(globals()[self.nameL[i].strip()])
-            print self.nameL[i].strip()
+            #print self.nameL[i].strip()
             
         for i in range(0,26):
-                model.add_transition(model.start, globals()[self.nameL[i].strip()], self.pigreco[i])
+            model.add_transition(model.start, globals()[self.nameL[i].strip()], self.pigreco[i])
+            
+        #############################################################
+        for i in range(0, 26):
+            model.add_transition(globals()[self.nameL[i].strip()], model.end, self.final_p[i])
+        #############################################################
             
         for i in range(0,26):#insert transactions
             for n in range(0,26):
@@ -74,10 +81,14 @@ class Hmm:
                     #print "sequence: '{}' - log probability: {} - path: {}".format(''.join(word), logp, " ".join(state.name for idx, state in path))
                     for idx, state in path:
                         #print state.name
-                        if (state.name != "Mispelling-start"): 
+                        if (state.name != "Mispelling-start") and (state.name != "Mispelling-end"): 
                             inferred_text.append(state.name.strip())
                             #print "LUI"+state.name.strip()+"LUI"
-                    inferred_text.append(" ")   
+                    inferred_text.append(" ")
+                elif word == "nan":
+                    inferred_text.append("man")
+                elif word == "inf":
+                    inferred_text.append("inc")
             prova.append(''.join(inferred_text)) 
             #print string.join(inferred_text)
             inferred_text = []

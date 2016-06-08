@@ -30,6 +30,7 @@ def file_to_string(file_input):
 class Ground_Truth:
     
     pigreco = numpy.zeros(26)
+    final_p = numpy.zeros(26)
     transition_p = numpy.zeros((26,26))
     obs_matrix = numpy.zeros(shape = (26, 26)) #dimensione esagerata, alla fine vedi se riesci a ridurla (matrice sparsa/arraylist?)
     
@@ -44,6 +45,8 @@ class Ground_Truth:
                     if isletter(word[0]) : #DOVREBBE ESSERE INUTILE
                         self.pigreco[ord(word[0]) - 97] += 1
                         word_counter += 1
+                    if isletter(word[len(word) - 1]):
+                        self.final_p[ord(word[len(word) - 1]) - 97] += 1
                 #ora controllo le P di passare da una lettera all'altra
                     if not len(word) == 1 : #se la parola ha length almeno uguale a 2
                         for j in range(len(word)-1): #primo iteratore //faccio -1 perche incremento subito i
@@ -71,6 +74,11 @@ class Ground_Truth:
         if not word_counter == 0:
             for i in range(len(self.pigreco)):
                 self.pigreco[i] = self.pigreco[i]/word_counter #divido ogni i dell'array per il # di parole cosi' ho la distr. di P
+                self.final_p[i] = self.final_p[i]/word_counter
+        
+        print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+        print "vettore final_p"
+        print self.final_p
 
         for i in range(len(self.transition_p)):
             counter = 0
@@ -87,10 +95,10 @@ class Ground_Truth:
             print self.pigreco
             print "\n" 
         
-        #stampa matrice di transizioni
-        print "matrice transizione:"
-        for line in self.transition_p:
-            print line
+            #stampa matrice di transizioni
+            print "matrice transizione:"
+            for line in self.transition_p:
+                print line
 
 
         print "End transiction"
@@ -119,8 +127,8 @@ class Ground_Truth:
                 for j in range(len(self.obs_matrix[i])):
                     self.obs_matrix[i][j] = float(self.obs_matrix[i][j])/counter 
                 
-        print "matrice di probabilita' di osservazioni: "
-        for line in self.obs_matrix:
-            print line
+        #print "matrice di probabilita' di osservazioni: "
+        #for line in self.obs_matrix:
+        #    print line
 
         print "End observations_p"  

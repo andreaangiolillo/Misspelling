@@ -70,16 +70,24 @@ if __name__ == '__main__':
     perturbed_tweets = open('csv\perturbation_tweets.csv')
     esteem.observations_p(clean_tweets, perturbed_tweets)
     
+    
+    
+    
+    hmm = Hmm(esteem.transition_p, esteem.obs_matrix, esteem.pigreco, esteem.final_p )
+    hmm.create_hmm(csv.error_list)
+
+
+    print "################################################################"
     print "DIFFERENZA TRA ORIGINALI"
     clean_tweets = open('csv\clean_tweets.csv')
     perturbed_tweets = open('csv\perturbation_tweets.csv')
     prediction_capabilities.calculate_capabilities(clean_tweets, perturbed_tweets)
     
-    
-    hmm = Hmm(esteem.transition_p, esteem.obs_matrix, esteem.pigreco )
-    hmm.create_hmm(csv.error_list)
-
-    #csv.print_tweets()    
-   
+    print "################################################################"
+    print "DIFFERENZA FINALE"
+    clean_tweets = open('csv\clean_tweets.csv')
+    output_tweets = open('csv\output_tweets.csv')
+    prediction_capabilities.calculate_capabilities(clean_tweets, output_tweets)
+       
     ##############################################################################################
 

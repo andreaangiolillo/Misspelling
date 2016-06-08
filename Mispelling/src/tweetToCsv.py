@@ -39,7 +39,7 @@ class TweetToCsv:
                       ("h","k","n","u"),#j
                       ("j","l","m","i","o"),#k
                       ("k","o","p","m"),#l
-                      ("n","k","l"),#m
+                      ("j","k","l"),#m
                       ("b","m","j","h"),#n
                       ("i","p","k","l"),#o
                       ("o","l"),#p
@@ -135,6 +135,8 @@ class TweetToCsv:
                     newstr = re.sub('(@[a-z]*)', '', newstr)
                     newstr = re.sub('(#[a-z]*)', '', newstr)
                     newstr = re.sub('(^rt\s[a-z \s]+)', '', newstr)
+                    newstr = re.sub('nan', '', newstr)
+                    newstr = re.sub('inf', '', newstr)
                     newstr = newstr.strip()
                     if len(newstr) > 0:
                         clean.append(newstr.lower())

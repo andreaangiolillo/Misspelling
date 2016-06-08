@@ -34,6 +34,8 @@ def calculate_capabilities(original_file, post_correction_file): #POTREI PASSARE
     original_string = file_to_string(original_file)
     post_string = file_to_string(post_correction_file)
     
+    print len(original_string)
+    print len(post_string)
     mismatch_counter = 0    
     
     if len(original_string) == len(post_string):
