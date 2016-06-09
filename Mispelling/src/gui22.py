@@ -7,7 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
-
+import urllib 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
@@ -22,7 +22,22 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
+
+
+
+
 class Ui_Form(object):
+    
+    
+    def buttonClick(self):
+        #sender = self.sender()
+        #self.statusBar().showMessage(sender.text() + ' was pressed')
+        f = open('csv\clean_tweets.csv', 'rb+')
+       
+ 
+        
+        
+        
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
         Form.resize(652, 608)
@@ -144,10 +159,14 @@ class Ui_Form(object):
 "      border: 2px groove rgb(255, 94, 94); ;\n"
 "    border-radius: 0px\n"
 "}"))
+        
+        
+            
         self.groupBox_4.setObjectName(_fromUtf8("groupBox_4"))
         self.pushButton_17 = QtGui.QPushButton(self.groupBox_4)
         self.pushButton_17.setGeometry(QtCore.QRect(30, 30, 112, 66))
         self.pushButton_17.setMouseTracking(True)
+        self.pushButton_17.clicked.connect(self.buttonClick)
         self.pushButton_17.setStyleSheet(_fromUtf8("QPushButton {\n"
 "\n"
 "text-color:black;\n"

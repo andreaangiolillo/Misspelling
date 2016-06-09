@@ -38,11 +38,28 @@ def calculate_capabilities(original_file, post_correction_file): #POTREI PASSARE
     print len(post_string)
     mismatch_counter = 0    
     
+
+    print "start"
+    for i in range(len(original_string)):
+        
+        if not (original_string[i] == post_string[i]):
+            mismatch_counter += 1 
+            print "original "+ original_string[i] 
+            print "post "+ post_string[i]
+
+    #print float(mismatch_counter)/len(original_string)
+    
+    
+    """ PARTE ORIGINALE
     if len(original_string) == len(post_string):
         for i in range(len(original_string)):
             if not (original_string[i] == post_string[i]):
                 mismatch_counter += 1 
     else:
-        print "ERROR: le lunghezze dei due file non coincidono"     
-
-    print float(mismatch_counter)/len(original_string)
+        print "ERROR: le lunghezze dei due file non coincidono"     """
+    
+    if len(original_string) != len(post_string):
+        print "ERROR: le lunghezze dei due file non coincidono" 
+    
+    
+    

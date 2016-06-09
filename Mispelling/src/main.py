@@ -8,13 +8,13 @@ from tweetToCsv import TweetToCsv
 from ground_truth import Ground_Truth
 from hmm import Hmm
 
-import GUI
+import gui22
 import sys
 from PyQt4 import *
 import sys
 import prediction_capabilities
 import csv
-
+import sys
 
 
 
@@ -90,4 +90,18 @@ if __name__ == '__main__':
     prediction_capabilities.calculate_capabilities(clean_tweets, output_tweets)
        
     ##############################################################################################
+    
+    
+"""
+    app = QtGui.QApplication(sys.argv)
+    Form = QtGui.QWidget()
+    ui = gui22.Ui_Form()
+    ui.setupUi(Form)
+    Form.show()
+    sys.exit(app.exec_())
+
+ """   
+    
+    
+    
 

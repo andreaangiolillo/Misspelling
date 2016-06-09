@@ -89,7 +89,7 @@ class Hmm:
                     inferred_text.append("man")
                 elif word == "inf":
                     inferred_text.append("inc")
-            prova.append(''.join(inferred_text)) 
+            prova.append(''.join(inferred_text).strip()) 
             #print string.join(inferred_text)
             inferred_text = []
         #''.join(inferred_text)

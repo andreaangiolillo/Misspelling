@@ -113,7 +113,7 @@ class TweetToCsv:
     
     #list with name of csv   
         #name = ["BBCBreaking","WSJPolitics","NBA","nytimes","Pontifex","POTUS","SkyFootball","UN","WSJ","WWF"]  
-        name = ["UKLabour", "Conservatives", "David_Cameron", "MayorofLondon", "UniofOxford","Cambridge_Uni", "tcddublin"]
+        name = ["UKLabour", "Conservatives", "David_Cameron", "MayorofLondon", "UniofOxford","Cambridge_Uni"]
         length = len(name)
         clean = []
 
@@ -125,21 +125,22 @@ class TweetToCsv:
                 for row in reader:
                 #print row[0]
                     newstr = row[0].strip().lower()
-                    newstr = re.sub('([^a-zA-Z0-9_ # @ \- \'])', ' ', newstr)
-                    newstr = re.sub('([^a-z # @ \- \'])', '', newstr)
-                    newstr = re.sub('-', ' ', newstr)
-                    newstr = re.sub('\'', ' ', newstr)
-                    newstr = re.sub('\"', ' ', newstr)
-                    newstr = re.sub('(https)[a-z  # @ \%\']*', '', newstr)
-                    newstr = re.sub('(http)[a-zA-Z0-9_  # @ \%\']*', '', newstr)
-                    newstr = re.sub('(@[a-z]*)', '', newstr)
-                    newstr = re.sub('(#[a-z]*)', '', newstr)
-                    newstr = re.sub('(^rt\s[a-z \s]+)', '', newstr)
-                    newstr = re.sub('nan', '', newstr)
-                    newstr = re.sub('inf', '', newstr)
+                    newstr = re.sub('([^a-zA-Z0-9_ # @ \- \'])', '', newstr.strip())
+                    newstr = re.sub('([^a-z # @ \- \'])', '', newstr.strip())
+                    newstr = re.sub('-', ' ', newstr.strip())
+                    newstr = re.sub('\'', '', newstr.strip())
+                    newstr = re.sub('\"', '', newstr.strip())
+                    newstr = re.sub('(https)[a-z  # @ \%\']*', '', newstr.strip())
+                    newstr = re.sub('(http)[a-zA-Z0-9_  # @ \%\']*', '', newstr.strip())
+                    newstr = re.sub('(@[a-z]*)', '', newstr.strip())
+                    newstr = re.sub('(#[a-z]*)', '', newstr.strip())
+                    newstr = re.sub('(^rt\s[a-z \s]*)', '', newstr.strip())
+                    newstr = re.sub('nan', '', newstr.strip())
+                    newstr = re.sub('inf', '', newstr.strip())
+                    newstr = re.sub('^rt', '', newstr.strip())
                     newstr = newstr.strip()
                     if len(newstr) > 0:
-                        clean.append(newstr.lower())
+                        clean.append(newstr.lower().strip())
                     
 
     #write the csv    
@@ -148,8 +149,23 @@ class TweetToCsv:
             writer.writerows([clean])
             pass
         print "End cleanCsv"
-
-
+     
+    
+    
+        with open('csv\clean_tweets.csv', 'rb') as f:
+            reader = csv.reader(f)
+            ns = []
+            for line in reader:
+                r = re.sub("\s\s+" , " ", line[0].strip())
+                ns.append(r)
+                
+        with open('csv\clean_tweets.csv', 'wb') as f:
+            writer = csv.writer(f, delimiter='\n')
+            writer.writerows([ns])
+        
+    
+    
+    
 
     def perturbate_tweets(self): 
         print "Start perturbation"
