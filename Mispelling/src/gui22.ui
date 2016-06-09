@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>652</width>
+    <height>608</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Mispelling</string>
+  </property>
+  <property name="accessibleName">
+   <string/>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+
+
+
+QWidget {
+	border: 2px groove gray;
+	border-radius: 20px;
+	background:qlineargradient(spread:pad, x1:0.636, y1:0.465909, x2:1, y2:0, stop:0 rgba(42, 40, 63, 255), stop:1 rgba(255, 255, 255, 255));
+	margin:20%
+}</string>
+  </property>
+  <widget class="QGroupBox" name="groupBox_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>591</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QGroupBox::title {
+  color: rgb(102, 137, 153)
+}
+
+QGroupBox::border {
+  color: rgb(255, 94, 94);
+}
+
+
+QGroupBox
+{
+    background-color:transparent;
+  	border: 2px groove rgb(102, 137, 153) ;
+	border-radius: 0px
+}</string>
+   </property>
+   <property name="title">
+    <string>Original Text</string>
+   </property>
+   <widget class="QPlainTextEdit" name="plainTextEdit_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>571</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);
+border-radius: 10px;</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>230</y>
+     <width>591</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QGroupBox::title {
+  color: rgb(255, 94, 94);
+}
+
+QGroupBox::border {
+  color: rgb(255, 94, 94);
+}
+
+
+QGroupBox
+{
+    background-color:transparent;
+  	border: 2px groove rgb(255, 94, 94); ;
+	border-radius: 0px
+}</string>
+   </property>
+   <property name="title">
+    <string>Text</string>
+   </property>
+   <widget class="QPlainTextEdit" name="plainTextEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>571</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);
+border-radius: 10px;</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>150</y>
+     <width>112</width>
+     <height>66</height>
+    </rect>
+   </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+
+text-color:black;
+background-color: white;
+border-width: 1px;
+border-color: gray;
+border-style: solid;
+border-radius: 7;
+padding: 3px;
+font-size: 12px;
+padding-left: 5px;
+padding-right: 5px;
+min-width: 60px;
+max-width: 60px;
+min-height: 18px;
+max-height: 18px;
+}</string>
+   </property>
+   <property name="text">
+    <string>Traslate</string>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_3">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>360</y>
+     <width>271</width>
+     <height>231</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QGroupBox::title {
+  color: rgb(102, 137, 153)
+}
+
+QGroupBox::border {
+  color: rgb(255, 94, 94);
+}
+
+
+QGroupBox
+{
+    background-color:transparent;
+  	border: 2px groove rgb(102, 137, 153) ;
+	border-radius: 0px
+}</string>
+   </property>
+   <property name="title">
+    <string>Console</string>
+   </property>
+   <widget class="QTextBrowser" name="textBrowser">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>251</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_4">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>420</y>
+     <width>281</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QGroupBox::title {
+  color: rgb(255, 94, 94);
+}
+
+QGroupBox::border {
+  color: rgb(255, 94, 94);
+}
+
+
+QGroupBox
+{
+    background-color:transparent;
+  	border: 2px groove rgb(255, 94, 94); ;
+	border-radius: 0px
+}</string>
+   </property>
+   <property name="title">
+    <string>Download CSV Tweets</string>
+   </property>
+   <widget class="QPushButton" name="pushButton_17">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>30</y>
+      <width>112</width>
+      <height>66</height>
+     </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+
+text-color:black;
+background-color: white;
+border-width: 1px;
+border-color: gray;
+border-style: solid;
+border-radius: 7;
+padding: 3px;
+font-size: 12px;
+padding-left: 5px;
+padding-right: 5px;
+min-width: 60px;
+max-width: 60px;
+min-height: 18px;
+max-height: 18px;
+}</string>
+    </property>
+    <property name="text">
+     <string>Input</string>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_18">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>30</y>
+      <width>112</width>
+      <height>66</height>
+     </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+
+text-color:black;
+background-color: white;
+border-width: 1px;
+border-color: gray;
+border-style: solid;
+border-radius: 7;
+padding: 3px;
+font-size: 12px;
+padding-left: 5px;
+padding-right: 5px;
+min-width: 60px;
+max-width: 60px;
+min-height: 18px;
+max-height: 18px;
+}</string>
+    </property>
+    <property name="text">
+     <string>Output</string>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+ <designerdata>
+  <property name="gridDeltaX">
+   <number>10</number>
+  </property>
+  <property name="gridDeltaY">
+   <number>10</number>
+  </property>
+  <property name="gridSnapX">
+   <bool>true</bool>
+  </property>
+  <property name="gridSnapY">
+   <bool>true</bool>
+  </property>
+  <property name="gridVisible">
+   <bool>true</bool>
+  </property>
+ </designerdata>
+</ui>
