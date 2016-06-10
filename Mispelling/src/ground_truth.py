@@ -77,8 +77,8 @@ class Ground_Truth:
                 self.final_p[i] = self.final_p[i]/word_counter
         
         print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-        print "vettore final_p"
-        print self.final_p
+        #print "vettore final_p"
+        #print self.final_p
 
         for i in range(len(self.transition_p)):
             counter = 0

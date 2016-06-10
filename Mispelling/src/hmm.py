@@ -36,7 +36,7 @@ class Hmm:
 
 
     def create_hmm(self, error_list):
-        print "matrice transizione:"
+        #print "matrice transizione:"
         model = HiddenMarkovModel("Mispelling")
         """pigreco1 = DiscreteDistribution( { 'a': self.pigreco[0], 'b': self.pigreco[1], 'c': self.pigreco[2], 'd': self.pigreco[3], 'e': self.pigreco[4], 'f': self.pigreco[5], 'g': self.pigreco[6], 'h': self.pigreco[7],
                                  'i': self.pigreco[8], 'j': self.pigreco[9], 'k': self.pigreco[10], 'l': self.pigreco[11],'m': self.pigreco[12], 'n': self.pigreco[13], 'o': self.pigreco[14], 'p': self.pigreco[15],
@@ -60,8 +60,8 @@ class Hmm:
             model.add_transition(model.start, globals()[self.nameL[i].strip()], self.pigreco[i])
             
         #############################################################
-        for i in range(0, 26):
-            model.add_transition(globals()[self.nameL[i].strip()], model.end, self.final_p[i])
+        #for i in range(0, 26):
+        #    model.add_transition(globals()[self.nameL[i].strip()], model.end, self.final_p[i])
         #############################################################
             
         for i in range(0,26):#insert transactions
@@ -86,9 +86,9 @@ class Hmm:
                             #print "LUI"+state.name.strip()+"LUI"
                     inferred_text.append(" ")
                 elif word == "nan":
-                    inferred_text.append("man")
+                    inferred_text.append("man ")
                 elif word == "inf":
-                    inferred_text.append("inc")
+                    inferred_text.append("inc ")
             prova.append(''.join(inferred_text).strip()) 
             #print string.join(inferred_text)
             inferred_text = []
