@@ -32,12 +32,12 @@ class Ground_Truth:
     pigreco = numpy.zeros(26)
     final_p = numpy.zeros(26)
     transition_p = numpy.zeros((26,26))
-    obs_matrix = numpy.zeros(shape = (26, 26)) #dimensione esagerata, alla fine vedi se riesci a ridurla (matrice sparsa/arraylist?)
+    obs_matrix = numpy.zeros(shape = (26, 26))
     
     def transiction(self):
         print "Start transiction"
         
-        inputfile = open('csv\clean_tweets.csv')          
+        inputfile = open('csv\gt_tweets.csv')          
         word_counter = 0
         for line in inputfile : #leggo tutte le parole 
             for word in line.split() : #divido lo stream di char in string appena trovo uno spazio

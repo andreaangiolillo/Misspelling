@@ -7,7 +7,14 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
-import urllib 
+import csv
+
+mismatch_counter = 0
+
+
+
+
+
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
@@ -22,23 +29,53 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-
-
-
-
 class Ui_Form(object):
     
+    def traslate(self):
+        testo = self.plainTextEdit_3.toPlainText()
+        self.plainTextEdit.clear()
+        self.plainTextEdit.appendPlainText(self.hmm.correct_from_input(testo))
+        
+        
+        
+    def buttonClickInput(self):
+        with open('csv\clean_tweets.csv', 'rb') as f:
+            reader = csv.reader(f)
+            ns = []
+            for line in reader:
+                ns.append(line)
+                
+        with open('C:\input.csv', 'wb') as f:
+            writer = csv.writer(f, delimiter='\n')
+            writer.writerows([ns])
+        self.textBrowser.clear()
+        self.textBrowser.append("File saved in C:\\input.csv")
     
-    def buttonClick(self):
-        #sender = self.sender()
-        #self.statusBar().showMessage(sender.text() + ' was pressed')
-        f = open('csv\clean_tweets.csv', 'rb+')
-       
- 
+    def buttonClickOutput(self):
+        with open('csv\output_tweets.csv', 'rb') as f:
+            reader = csv.reader(f)
+            ns = []
+            for line in reader:
+                ns.append(line)
+                
+        with open('C:\output.csv', 'wb') as f:
+            writer = csv.writer(f, delimiter='\n')
+            writer.writerows([ns])
+            
         
+            
+        self.textBrowser.clear()
+        self.textBrowser.append("File saved in C:\\output.csv")
         
-        
-    def setupUi(self, Form):
+      
+    
+    
+    
+    
+    
+    
+    def setupUi(self, Form, hmm):
+        self.hmm = hmm
         Form.setObjectName(_fromUtf8("Form"))
         Form.resize(652, 608)
         Form.setAccessibleName(_fromUtf8(""))
@@ -73,7 +110,9 @@ class Ui_Form(object):
         self.plainTextEdit_3 = QtGui.QPlainTextEdit(self.groupBox_2)
         self.plainTextEdit_3.setGeometry(QtCore.QRect(10, 20, 571, 81))
         self.plainTextEdit_3.setStyleSheet(_fromUtf8("background-color: rgb(255, 255, 255);\n"
-"border-radius: 10px;"))
+"border-radius: 10px;"
+"font-size: 12px;\n"
+))
         self.plainTextEdit_3.setObjectName(_fromUtf8("plainTextEdit_3"))
         self.groupBox = QtGui.QGroupBox(Form)
         self.groupBox.setGeometry(QtCore.QRect(20, 230, 591, 121))
@@ -96,11 +135,14 @@ class Ui_Form(object):
         self.plainTextEdit = QtGui.QPlainTextEdit(self.groupBox)
         self.plainTextEdit.setGeometry(QtCore.QRect(10, 20, 571, 81))
         self.plainTextEdit.setStyleSheet(_fromUtf8("background-color: rgb(255, 255, 255);\n"
-"border-radius: 10px;"))
+"border-radius: 10px;"
+"font-size: 12px;\n"
+))
         self.plainTextEdit.setObjectName(_fromUtf8("plainTextEdit"))
         self.pushButton = QtGui.QPushButton(Form)
         self.pushButton.setGeometry(QtCore.QRect(250, 150, 112, 66))
         self.pushButton.setMouseTracking(True)
+        self.pushButton.clicked.connect(self.traslate)
         self.pushButton.setStyleSheet(_fromUtf8("QPushButton {\n"
 "\n"
 "text-color:black;\n"
@@ -121,7 +163,7 @@ class Ui_Form(object):
         self.pushButton.setCheckable(False)
         self.pushButton.setObjectName(_fromUtf8("pushButton"))
         self.groupBox_3 = QtGui.QGroupBox(Form)
-        self.groupBox_3.setGeometry(QtCore.QRect(20, 360, 271, 231))
+        self.groupBox_3.setGeometry(QtCore.QRect(20, 360, 291, 231))
         self.groupBox_3.setStyleSheet(_fromUtf8("QGroupBox::title {\n"
 "  color: rgb(102, 137, 153)\n"
 "}\n"
@@ -139,8 +181,10 @@ class Ui_Form(object):
 "}"))
         self.groupBox_3.setObjectName(_fromUtf8("groupBox_3"))
         self.textBrowser = QtGui.QTextBrowser(self.groupBox_3)
-        self.textBrowser.setGeometry(QtCore.QRect(10, 20, 251, 191))
-        self.textBrowser.setStyleSheet(_fromUtf8("background-color:white"))
+        self.textBrowser.setGeometry(QtCore.QRect(10, 20, 271, 191))
+        self.textBrowser.setStyleSheet(_fromUtf8("background-color:black;\n"
+"font: 12pt \"Arial\";\n"
+"color: white"))
         self.textBrowser.setObjectName(_fromUtf8("textBrowser"))
         self.groupBox_4 = QtGui.QGroupBox(Form)
         self.groupBox_4.setGeometry(QtCore.QRect(320, 420, 281, 121))
@@ -156,17 +200,14 @@ class Ui_Form(object):
 "QGroupBox\n"
 "{\n"
 "    background-color:transparent;\n"
-"      border: 2px groove rgb(255, 94, 94); ;\n"
+"    border: 2px groove rgb(255, 94, 94); ;\n"
 "    border-radius: 0px\n"
 "}"))
-        
-        
-            
         self.groupBox_4.setObjectName(_fromUtf8("groupBox_4"))
         self.pushButton_17 = QtGui.QPushButton(self.groupBox_4)
         self.pushButton_17.setGeometry(QtCore.QRect(30, 30, 112, 66))
         self.pushButton_17.setMouseTracking(True)
-        self.pushButton_17.clicked.connect(self.buttonClick)
+        self.pushButton_17.clicked.connect(self.buttonClickInput)
         self.pushButton_17.setStyleSheet(_fromUtf8("QPushButton {\n"
 "\n"
 "text-color:black;\n"
@@ -184,11 +225,13 @@ class Ui_Form(object):
 "min-height: 18px;\n"
 "max-height: 18px;\n"
 "}"))
+        self.pushButton_17.setInputMethodHints(QtCore.Qt.ImhNone)
         self.pushButton_17.setCheckable(False)
         self.pushButton_17.setObjectName(_fromUtf8("pushButton_17"))
         self.pushButton_18 = QtGui.QPushButton(self.groupBox_4)
         self.pushButton_18.setGeometry(QtCore.QRect(130, 30, 112, 66))
         self.pushButton_18.setMouseTracking(True)
+        self.pushButton_18.clicked.connect(self.buttonClickOutput)
         self.pushButton_18.setStyleSheet(_fromUtf8("QPushButton {\n"
 "\n"
 "text-color:black;\n"
@@ -216,8 +259,13 @@ class Ui_Form(object):
         Form.setWindowTitle(_translate("Form", "Mispelling", None))
         self.groupBox_2.setTitle(_translate("Form", "Original Text", None))
         self.groupBox.setTitle(_translate("Form", "Text", None))
-        self.pushButton.setText(_translate("Form", "Traslate", None))
+        self.pushButton.setText(_translate("Form", "Improve", None))
         self.groupBox_3.setTitle(_translate("Form", "Console", None))
+        self.textBrowser.setHtml(_translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Arial\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:15px; margin-right:0px; -qt-block-indent:0; text-indent:2px;\"><br /></p></body></html>", None))
         self.groupBox_4.setTitle(_translate("Form", "Download CSV Tweets", None))
         self.pushButton_17.setText(_translate("Form", "Input", None))
         self.pushButton_18.setText(_translate("Form", "Output", None))
@@ -231,4 +279,5 @@ if __name__ == "__main__":
     ui.setupUi(Form)
     Form.show()
     sys.exit(app.exec_())
+    
 

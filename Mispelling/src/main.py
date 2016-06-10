@@ -16,25 +16,11 @@ import prediction_capabilities
 import csv
 import sys
 
-
-
-
-global TEST
-
-
-
-
 if __name__ == '__main__':
     
-    TEST = "T"
-    """
-    app = GUI.QtGui.QApplication(sys.argv)
-    Mispelling = GUI.QtGui.QMainWindow()
-    GUI.ui = GUI.Ui_Mispelling()
-    GUI.ui.setupUi(Mispelling)
-    Mispelling.show()
-    sys.exit(app.exec_())
-    """
+    app = QtGui.QApplication(sys.argv)
+    Form = QtGui.QWidget()
+    ui = gui22.Ui_Form()
 
     csv = TweetToCsv()
     esteem = Ground_Truth()
@@ -66,7 +52,7 @@ if __name__ == '__main__':
     csv.perturbate_tweets()
    
     esteem.transiction()
-    clean_tweets = open('csv\clean_tweets.csv')
+    clean_tweets = open('csv\lp_tweets.csv')
     perturbed_tweets = open('csv\perturbation_tweets.csv')
     esteem.observations_p(clean_tweets, perturbed_tweets)
     
@@ -76,32 +62,24 @@ if __name__ == '__main__':
     hmm = Hmm(esteem.transition_p, esteem.obs_matrix, esteem.pigreco, esteem.final_p )
     hmm.create_hmm(csv.error_list)
 
+    ui.setupUi(Form, hmm)
 
     print "################################################################"
     print "DIFFERENZA TRA ORIGINALI"
-    clean_tweets = open('csv\clean_tweets.csv')
+    clean_tweets = open('csv\lp_tweets.csv')
     perturbed_tweets = open('csv\perturbation_tweets.csv')
     prediction_capabilities.calculate_capabilities(clean_tweets, perturbed_tweets)
     
     print "################################################################"
     print "DIFFERENZA FINALE"
-    clean_tweets = open('csv\clean_tweets.csv')
+    clean_tweets = open('csv\lp_tweets.csv')
     output_tweets = open('csv\output_tweets.csv')
     prediction_capabilities.calculate_capabilities(clean_tweets, output_tweets)
        
     ##############################################################################################
     
-    
-"""
-    app = QtGui.QApplication(sys.argv)
-    Form = QtGui.QWidget()
-    ui = gui22.Ui_Form()
-    ui.setupUi(Form)
     Form.show()
     sys.exit(app.exec_())
-
- """   
-    
     
     
 

@@ -107,11 +107,9 @@ class TweetToCsv:
     
     
     def cleanCsv(self):
-        print "Start cleanCsv"
-    #set a csv number
-        
+        print "Start cleanCsv"    
     
-    #list with name of csv   
+        #list with name of csv   
         #name = ["BBCBreaking","WSJPolitics","NBA","nytimes","Pontifex","POTUS","SkyFootball","UN","WSJ","WWF"]  
         name = ["UKLabour", "Conservatives", "David_Cameron", "MayorofLondon", "UniofOxford","Cambridge_Uni"]
         length = len(name)
@@ -146,14 +144,11 @@ class TweetToCsv:
                         clean.append(newstr.lower().strip())
                     
 
-    #write the csv    
+        #write the csv    
         with open('csv\clean_tweets.csv', 'wb') as f:
             writer = csv.writer(f, delimiter='\n')
             writer.writerows([clean])
             pass
-        print "End cleanCsv"
-     
-    
     
         with open('csv\clean_tweets.csv', 'rb') as f:
             reader = csv.reader(f)
@@ -166,14 +161,33 @@ class TweetToCsv:
             writer = csv.writer(f, delimiter='\n')
             writer.writerows([ns])
         
-    
-    
-    
+        print "End cleanCsv"
+        
+        
+        #dividi i tweet in 80/20
+        gt_list = []
+        test_list = []
+        with open('csv\clean_tweets.csv', 'rb') as clean: 
+            reader = csv.reader(clean)
+            for line in reader:
+                print "DENTRO FOR"
+                r = random.random()
+                if r < 0.8:
+                    gt_list.append(line[0])
+                else:
+                    test_list.append(line[0])
+                    
+        with open('csv\gt_tweets.csv', 'wb') as gt, open('csv\lp_tweets.csv', 'wb') as test:
+            writer_gt = csv.writer(gt, delimiter = '\n')
+            writer_gt.writerows([gt_list])
+            writer_test = csv.writer(test, delimiter = '\n')
+            writer_test.writerows([test_list])
+            
 
     def perturbate_tweets(self): 
         print "Start perturbation"
         riscrittura = []
-        with open('csv\clean_tweets.csv', 'rb') as r:
+        with open('csv\lp_tweets.csv', 'rb') as r:
             reader = csv.reader(r)
             for line in reader:
                 tweet = line[0]
