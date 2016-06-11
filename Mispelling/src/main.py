@@ -24,7 +24,8 @@ if __name__ == '__main__':
 
     csv = TweetToCsv()
     esteem = Ground_Truth()
-    #download tweet and put all in csv
+
+    ##############################################################################################
     
     """csv.get_all_tweets("POTUS")
     csv.get_all_tweets("BBCBreaking")
@@ -48,6 +49,8 @@ if __name__ == '__main__':
     csv.get_all_tweets("tcddublin")
     """
    
+    ##############################################################################################
+   
     csv.cleanCsv()
     csv.perturbate_tweets()
    
@@ -56,8 +59,7 @@ if __name__ == '__main__':
     perturbed_tweets = open('csv\perturbation_tweets.csv')
     esteem.observations_p(clean_tweets, perturbed_tweets)
     
-    
-    
+    ##############################################################################################
     
     hmm = Hmm(esteem.transition_p, esteem.obs_matrix, esteem.pigreco, esteem.final_p )
     hmm.create_hmm(csv.error_list)
@@ -80,6 +82,3 @@ if __name__ == '__main__':
     
     Form.show()
     sys.exit(app.exec_())
-    
-    
-

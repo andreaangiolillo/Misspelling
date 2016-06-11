@@ -8,9 +8,6 @@ import random
 from ground_truth import isletter
 from numpy.random.mtrand import randint
 
-
-
-
 import ground_truth
 
 #Twitter API credentials
@@ -23,7 +20,6 @@ consumer_secret="E18qbpu8pEiQpxRzlWRW44ZmpmGwWV2zb1Y9eZ3G8vCrrIcPZP"
 # under "Your access token")
 access_token="250822105-ufFJci3R3aV5IALFpmzVBTrSCVIYQDsH2Nt6k7Jn"
 access_token_secret="8Hfv7AN8RnSwfM6oA9KOq8loSdWwvaJiQOcq6DwY8GB0T"
-
 
 class TweetToCsv:
     
@@ -105,8 +101,8 @@ class TweetToCsv:
         print "end get_all_tweets"
 
     
-    
     def cleanCsv(self):
+    
         print "Start cleanCsv"    
     
         #list with name of csv   
@@ -121,7 +117,6 @@ class TweetToCsv:
             
             #clean rows
                 for row in reader:
-                #print row[0]
                     newstr = row[0].strip().lower()
                     newstr = re.sub('([^a-zA-Z0-9_ # @ \- \'])', '', newstr.strip())
                     newstr = re.sub('([^a-z # @ \- \'])', '', newstr.strip())
@@ -143,7 +138,6 @@ class TweetToCsv:
                     if len(newstr) > 0:
                         clean.append(newstr.lower().strip())
                     
-
         #write the csv    
         with open('csv\clean_tweets.csv', 'wb') as f:
             writer = csv.writer(f, delimiter='\n')
@@ -163,14 +157,12 @@ class TweetToCsv:
         
         print "End cleanCsv"
         
-        
         #dividi i tweet in 80/20
         gt_list = []
         test_list = []
         with open('csv\clean_tweets.csv', 'rb') as clean: 
             reader = csv.reader(clean)
             for line in reader:
-                print "DENTRO FOR"
                 r = random.random()
                 if r < 0.8:
                     gt_list.append(line[0])
@@ -185,7 +177,9 @@ class TweetToCsv:
             
 
     def perturbate_tweets(self): 
+        
         print "Start perturbation"
+        
         riscrittura = []
         with open('csv\lp_tweets.csv', 'rb') as r:
             reader = csv.reader(r)
@@ -203,21 +197,5 @@ class TweetToCsv:
         with open('csv\perturbation_tweets.csv', 'wb') as w:
             writer = csv.writer(w, delimiter='\n')
             writer.writerows([riscrittura])                       
+        
         print "End perturbation"
-    
-    """def print_tweets(self):
-        output_viterbi = open('csv\output_tweets.csv')
-        concatenator = []
-        for line in output_viterbi:
-            for word in line.split():
-                if word == "Mispelling-start":
-                    concatenator.append(' ')
-                else:
-                    concatenator.append(line)
-        #concatenator = ''.join(concatenator)
-
-
-        with open('csv\oooooooo.csv', 'wb') as f:
-            writer = csv.writer(f, delimiter='\n')
-            writer.writerows([concatenator])
-        pass"""

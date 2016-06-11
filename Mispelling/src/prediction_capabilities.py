@@ -3,13 +3,7 @@ Created on 05 giu 2016
 
 @author: corrado
 '''
-import csv
-"""
--valutaaione tra file perturbato e file post-correzione
--prendi i due file e scorrendo uno per uno tieni conteggio dei mismatch
--il risultato e' il rapporto tra lettere corrette e lettere non correttte
-"""
-
+#import csv #usato solo nel debugging
 
 mismatch_counter = 0
 
@@ -21,17 +15,11 @@ def file_to_string(file_input):
                 file_string += word[i]
     return file_string
 
-def calculate_capabilities(original_file, post_correction_file): #POTREI PASSARE SUBITO STRINGHE???
-    
-    print "calcolo delle capacita' di predizione del modello:"
+def calculate_capabilities(original_file, post_correction_file):
     
     original_string = file_to_string(original_file)
     post_string = file_to_string(post_correction_file)
     
-    print "originale:"
-    print len(original_string)
-    print "finale:"
-    print len(post_string)
     mismatch_counter = 0    
     
     if len(original_string) == len(post_string):
@@ -40,10 +28,10 @@ def calculate_capabilities(original_file, post_correction_file): #POTREI PASSARE
                 mismatch_counter += 1
         print float(mismatch_counter)/len(original_string)
     else:
-        print "ERROR: le lunghezze dei due file non coincidono"     """
-    
-     
-    ######### PER TESTING #########
+        print "ERROR: le lunghezze dei due file non coincidono"     
+        
+        
+    """                       ######### PER TESTING #########
     
     with open('csv\clean_tweets.csv', 'rb') as f1, open('csv\output_tweets.csv', 'rb') as f2:
         rdr1 = csv.reader(f1)
@@ -61,6 +49,3 @@ def calculate_capabilities(original_file, post_correction_file): #POTREI PASSARE
                 print "linea "
                 print c
     """
-    
-    
-    

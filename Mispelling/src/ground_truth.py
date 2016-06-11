@@ -53,32 +53,13 @@ class Ground_Truth:
                             i = j + 1
                             if isletter(word[i]): #se e' falso qua itera unaltra volta
                                 if isletter(word[j]): #se sono tutti e due lettere
-                                    self.transition_p[ord(word[j]) - 97][ord(word[i])- 97] += 1
-                                
-        
-        """         if not len(word) == 1 : #se la parola ha length almeno uguale a 2
-                        for i in range(len(word)-1): #primo iteratore
-                            i += 1 #perdoname madre por mi code loco
-                            j = i-1 #j sta dietro a i
-                            if isletter(word[i]): #se e' falso qua itera unaltra volta
-                                if isletter(word[j]): #se sono tutti e due lettere
-                                    self.transition_p[ord(word[i]) - 97][ord(word[j])- 97] += 1
-                                else: #se la j non e' lettera vado indietro al massimo di uno ancora
-                                    if j-1>0 and isletter(word[j-1]):
-                                        self.transition_p[ord(word[i]) - 97][ord(word[j-1])- 97] += 1 """
-                                        
-                                        
-                                        
+                                    self.transition_p[ord(word[j]) - 97][ord(word[i])- 97] += 1                                                     
         inputfile.close()
 
         if not word_counter == 0:
             for i in range(len(self.pigreco)):
                 self.pigreco[i] = self.pigreco[i]/word_counter #divido ogni i dell'array per il # di parole cosi' ho la distr. di P
                 self.final_p[i] = self.final_p[i]/word_counter
-        
-        print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-        #print "vettore final_p"
-        #print self.final_p
 
         for i in range(len(self.transition_p)):
             counter = 0
@@ -87,7 +68,6 @@ class Ground_Truth:
             if not counter == 0:
                 for j in range(len(self.transition_p[i])):
                     self.transition_p[i][j] = self.transition_p[i][j]/counter #round(transition_p[i][j]/(counter), 4)
-    
     
         if (TEST == "T"):
             #stampa vettore pigreco
@@ -99,7 +79,6 @@ class Ground_Truth:
             print "matrice transizione:"
             for line in self.transition_p:
                 print line
-
 
         print "End transiction"
         
@@ -116,8 +95,6 @@ class Ground_Truth:
                     self.obs_matrix[ord(clean_string[i])-97][ord(pert_string[i])-97] += 1 #altrimenti non fare nulla  
         else:
             print "ERROR: le lunghezze dei due file non coincidono"
-    
-        print "finito di calcolare matrice di osservazioni: "
 
         for i in range(len(self.obs_matrix)):
             counter = 0.0
@@ -127,8 +104,4 @@ class Ground_Truth:
                 for j in range(len(self.obs_matrix[i])):
                     self.obs_matrix[i][j] = float(self.obs_matrix[i][j])/counter 
                 
-        #print "matrice di probabilita' di osservazioni: "
-        #for line in self.obs_matrix:
-        #    print line
-
         print "End observations_p"  
