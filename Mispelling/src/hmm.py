@@ -89,9 +89,13 @@ class Hmm:
     zuzzu = ""
     def correct_from_input(self, input_text):
         print input_text
-        self.zuzzu = ''.join(str(input_text))
+        self.zuzzu = ''.join(str(input_text).lower())
         self.txt = []
         for word in self.zuzzu.split():
+            if (word == "nan"):
+                word = "man"
+            if (word == "inf"):
+                word = "inc"
             self.correct_word(word)
         self.out = ''.join(self.txt).strip()
         return self.out
@@ -100,10 +104,10 @@ class Hmm:
     def correct_word(self, word):
         for i in range(len(word)):
             if not isletter(word[i]):
-                if not len(word[:i]) == 0:
+                if not len(word[:i]) == 0:     
                     logp, path = self.model.viterbi(word[:i])
                     for idx, state in path:
-                        if (state.name != "Mispelling-start") and (state.name != "Mispelling-end"): 
+                        if (state.name != "Mispelling-start") and (state.name != "Mispelling-end"):
                             self.txt.append(state.name.strip())
                     self.txt.append(word[i])
                 if len(word[i+1:]) == 0:
@@ -117,3 +121,9 @@ class Hmm:
                 if (state.name != "Mispelling-start") and (state.name != "Mispelling-end"): 
                     self.txt.append(state.name.strip())
             self.txt.append(" ")
+            
+            
+            
+            
+            
+            
