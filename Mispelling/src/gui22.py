@@ -39,7 +39,7 @@ class Ui_Form(object):
         
         
     def buttonClickInput(self):
-        with open('csv\clean_tweets.csv', 'rb') as f:
+        with open('csv\lp_tweets.csv', 'rb') as f:
             reader = csv.reader(f)
             ns = []
             for line in reader:
