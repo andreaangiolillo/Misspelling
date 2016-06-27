@@ -17,7 +17,7 @@ import csv
 import sys
 
 if __name__ == '__main__':
-    
+    print "INIZIO MISPELLING"
     app = QtGui.QApplication(sys.argv)
     Form = QtGui.QWidget()
     ui = gui22.Ui_Form()
@@ -26,31 +26,17 @@ if __name__ == '__main__':
     esteem = Ground_Truth()
 
     ##############################################################################################
-    
-    """csv.get_all_tweets("POTUS")
-    csv.get_all_tweets("BBCBreaking")
-    
-    csv.get_all_tweets("nytimes")
-    csv.get_all_tweets("WSJPolitics")
-    csv.get_all_tweets("NBA")
-    csv.get_all_tweets("SkyFootball")
-    csv.get_all_tweets("Pontifex")  
-    csv.get_all_tweets("WWF")
-    csv.get_all_tweets("WSJ")
-    csv.get_all_tweets("UN")"""
-    
     """
+    print "SCARICA TWEETS"
     csv.get_all_tweets("UKLabour")
     csv.get_all_tweets("Conservatives")
     csv.get_all_tweets("David_Cameron")
     csv.get_all_tweets("MayorofLondon")
     csv.get_all_tweets("UniofOxford")
     csv.get_all_tweets("Cambridge_Uni")
-    csv.get_all_tweets("tcddublin")
     """
-   
     ##############################################################################################
-   
+    print "PULIZIA TWEETS"
     csv.cleanCsv()
     csv.perturbate_tweets()
    
@@ -60,7 +46,7 @@ if __name__ == '__main__':
     esteem.observations_p(clean_tweets, perturbed_tweets)
     
     ##############################################################################################
-    
+    print "GENERAZIONE MODELLO HMM"
     hmm = Hmm(esteem.transition_p, esteem.obs_matrix, esteem.pigreco, esteem.final_p )
     hmm.create_hmm(csv.error_list)
 
