@@ -1,5 +1,5 @@
 # Misspelling [Final project IA CLASS, 2 year Master’s Degree]
-An automated grammar cheker based on Hidden Markov Model.
+An automated grammar checker based on Hidden Markov Model.
 
 Libraries used:
 - Numpy
